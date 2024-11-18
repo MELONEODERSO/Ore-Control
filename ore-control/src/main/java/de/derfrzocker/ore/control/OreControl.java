@@ -3,12 +3,7 @@ package de.derfrzocker.ore.control;
 import com.google.common.base.Charsets;
 import de.derfrzocker.feature.api.util.Parser;
 import de.derfrzocker.feature.common.feature.placement.ActivationModifier;
-import de.derfrzocker.feature.common.ruletest.AlwaysTrueRuleTestType;
-import de.derfrzocker.feature.common.ruletest.BlockMatchRuleTestType;
-import de.derfrzocker.feature.common.ruletest.BlockStateMatchRuleTestType;
-import de.derfrzocker.feature.common.ruletest.RandomBlockMatchRuleTestType;
-import de.derfrzocker.feature.common.ruletest.RandomBlockStateMatchRuleTestType;
-import de.derfrzocker.feature.common.ruletest.TagMatchRuleTestType;
+import de.derfrzocker.feature.common.ruletest.*;
 import de.derfrzocker.feature.common.value.bool.BooleanType;
 import de.derfrzocker.feature.common.value.bool.FixedBooleanType;
 import de.derfrzocker.feature.common.value.number.FixedFloatType;
@@ -40,15 +35,6 @@ import de.derfrzocker.ore.control.cache.extra.ExtraValueCache;
 import de.derfrzocker.ore.control.cache.info.ConfigInfoCache;
 import de.derfrzocker.ore.control.gui.OreControlGuiManager;
 import de.derfrzocker.ore.control.impl.BasicConfigManager;
-import de.derfrzocker.ore.control.impl.v1_18_R1.NMSReplacer_v1_18_R1;
-import de.derfrzocker.ore.control.impl.v1_18_R2.NMSReplacer_v1_18_R2;
-import de.derfrzocker.ore.control.impl.v1_19_R1.NMSReplacer_v1_19_R1;
-import de.derfrzocker.ore.control.impl.v1_19_R2.NMSReplacer_v1_19_R2;
-import de.derfrzocker.ore.control.impl.v1_19_R3.NMSReplacer_v1_19_R3;
-import de.derfrzocker.ore.control.impl.v1_20_R1.NMSReplacer_v1_20_R1;
-import de.derfrzocker.ore.control.impl.v1_20_R2.NMSReplacer_v1_20_R2;
-import de.derfrzocker.ore.control.impl.v1_20_R3.NMSReplacer_v1_20_R3;
-import de.derfrzocker.ore.control.impl.v1_20_R4.NMSReplacer_v1_20_R4;
 import de.derfrzocker.ore.control.impl.v1_21_R1.NMSReplacer_v1_21_R1;
 import de.derfrzocker.ore.control.impl.v1_21_R2.NMSReplacer_v1_21_R2;
 import de.derfrzocker.ore.control.interactions.BlockInteractionManager;
@@ -147,25 +133,7 @@ public class OreControl extends JavaPlugin implements Listener {
     }
 
     private NMSReplacer getNmsReplacer() {
-        if (InternalVersion.v1_18_R1.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_18_R1(oreControlManager, configParser);
-        } else if (InternalVersion.v1_18_R2.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_18_R2(oreControlManager, configParser);
-        } else if (InternalVersion.v1_19_R1.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_19_R1(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_19_R2.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_19_R2(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_19_R3.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_19_R3(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_20_R1.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_20_R1(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_20_R2.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_20_R2(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_20_R3.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_20_R3(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_20_R4.getServerVersionRange().isInRange(version)) {
-            return new NMSReplacer_v1_20_R4(this, oreControlManager, configParser);
-        } else if (InternalVersion.v1_21_R1.getServerVersionRange().isInRange(version)) {
+        if (InternalVersion.v1_21_R1.getServerVersionRange().isInRange(version)) {
             return new NMSReplacer_v1_21_R1(this, oreControlManager, configParser);
         } else if (InternalVersion.v1_21_R2.getServerVersionRange().isInRange(version)) {
             return new NMSReplacer_v1_21_R2(this, oreControlManager, configParser);
@@ -209,7 +177,9 @@ public class OreControl extends JavaPlugin implements Listener {
     private void registerFeatureGenerators(OreControlRegistries registries) {
     }
 
-    private void registerPlacementModifier(OreControlRegistries registries) { registries.getPlacementModifierRegistry().register(new ActivationModifier(registries)); }
+    private void registerPlacementModifier(OreControlRegistries registries) {
+        registries.getPlacementModifierRegistry().register(new ActivationModifier(registries));
+    }
 
     @Override // TODO move to own class
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
